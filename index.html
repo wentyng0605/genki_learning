@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>元気 Genki Audio</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet" />
   <style>
@@ -20,25 +20,28 @@
       --text-2:    #5a7068;
       --text-3:    #8eada5;
       --text-4:    #b5cdc6;
-      --sidebar-w: 200px;
       --radius:    14px;
       --radius-sm: 9px;
+      --nav-h:     60px;
+      --safe-b:    env(safe-area-inset-bottom, 0px);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
 
     body {
       font-family: 'Nunito', sans-serif;
       background: var(--bg);
       color: var(--text);
-      height: 100vh;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* soft pastel background blobs */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -49,194 +52,203 @@
       pointer-events: none; z-index: 0;
     }
 
-    /* ── Header ── */
-    header {
-      height: 58px;
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      padding: 0 24px;
-      gap: 20px;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 50;
+    /* ══════════════════════════════════
+       DESKTOP layout (≥ 640px)
+    ══════════════════════════════════ */
+    @media (min-width: 640px) {
+      /* ── Header ── */
+      header {
+        height: 58px;
+        background: rgba(255,255,255,0.82);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        gap: 20px;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 50;
+      }
+      .logo { display: flex; align-items: baseline; gap: 8px; }
+      .logo-jp { font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 600; color: var(--accent-dk); }
+      .logo-en { font-size: 13px; font-weight: 500; color: var(--text-3); }
+      .tabs { margin-left: auto; display: flex; gap: 6px; }
+      .tab-btn {
+        font-family: 'Nunito', sans-serif; font-size: 12.5px; font-weight: 600;
+        color: var(--text-3); background: none; border: 1.5px solid transparent;
+        padding: 5px 14px; border-radius: 20px; cursor: pointer; transition: all 0.18s;
+      }
+      .tab-btn:hover { color: var(--accent); background: var(--accent-lt); }
+      .tab-btn.active { color: var(--white); background: var(--accent); border-color: var(--accent); box-shadow: 0 3px 10px rgba(91,170,138,0.28); }
+
+      /* ── Layout ── */
+      .main { display: flex; flex: 1; overflow: hidden; position: relative; z-index: 1; }
+
+      /* ── Sidebar ── */
+      .sidebar {
+        width: 200px;
+        background: rgba(255,255,255,0.55);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-right: 1px solid var(--border);
+        overflow-y: auto; flex-shrink: 0; padding: 18px 10px;
+      }
+      .sidebar::-webkit-scrollbar { width: 0; }
+      .sb-label { font-size: 10.5px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: 0.09em; padding: 0 8px 10px; }
+      .ch-btn {
+        display: flex; align-items: center; gap: 10px; width: 100%;
+        background: none; border: none; font-family: 'Nunito', sans-serif;
+        font-size: 13px; font-weight: 500; color: var(--text-2);
+        padding: 7px 8px; border-radius: var(--radius-sm); cursor: pointer; text-align: left; transition: all 0.15s;
+      }
+      .ch-btn:hover { background: var(--accent-lt); color: var(--accent-dk); }
+      .ch-btn.active { background: var(--accent); color: white; box-shadow: 0 3px 10px rgba(91,170,138,0.25); }
+      .ch-pill {
+        width: 24px; height: 24px; border-radius: 7px; background: var(--bg2);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 10px; font-weight: 700; color: var(--text-3); flex-shrink: 0; transition: all 0.15s;
+      }
+      .ch-btn.active .ch-pill { background: rgba(255,255,255,0.25); color: white; }
+
+      /* ── Content ── */
+      .content { flex: 1; overflow-y: auto; padding: 28px 32px; }
+      .content::-webkit-scrollbar { width: 5px; }
+      .content::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+      .ch-header h2 { font-size: 26px; }
+      .ch-header .meta { font-size: 12.5px; }
+
+      /* hide mobile-only elements */
+      .mob-header, .bottom-nav, .mob-chapter-btn { display: none !important; }
     }
 
-    .logo {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-    }
-    .logo-jp {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--accent-dk);
-      letter-spacing: 0.02em;
-    }
-    .logo-en {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      letter-spacing: 0.01em;
+    /* ══════════════════════════════════
+       MOBILE layout (< 640px)
+    ══════════════════════════════════ */
+    @media (max-width: 639px) {
+      /* hide desktop-only elements */
+      header, .sidebar { display: none !important; }
+
+      /* ── Mobile Header ── */
+      .mob-header {
+        height: 52px;
+        background: rgba(255,255,255,0.88);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 50;
+      }
+      .mob-logo { display: flex; align-items: baseline; gap: 7px; }
+      .mob-logo-jp { font-family: 'Noto Serif JP', serif; font-size: 17px; font-weight: 600; color: var(--accent-dk); }
+      .mob-logo-en { font-size: 11.5px; font-weight: 500; color: var(--text-3); }
+
+      /* chapter selector button in header */
+      .mob-chapter-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--accent-lt);
+        border: none;
+        border-radius: 20px;
+        padding: 6px 12px;
+        font-family: 'Nunito', sans-serif;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: var(--accent-dk);
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .mob-chapter-btn:active { background: rgba(91,170,138,0.22); }
+      .mob-chapter-btn svg { width: 12px; height: 12px; }
+
+      /* ── Main (full screen, above bottom nav) ── */
+      .main {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        flex-direction: column;
+      }
+
+      /* ── Content ── */
+      .content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px 14px calc(var(--nav-h) + var(--safe-b) + 8px);
+        -webkit-overflow-scrolling: touch;
+      }
+      .ch-header h2 { font-size: 20px; }
+      .ch-header .meta { font-size: 11.5px; }
+      .audio-row { padding: 10px 12px; gap: 10px; }
+      .play-btn { width: 36px; height: 36px; }
+
+      /* ── Bottom Nav ── */
+      .bottom-nav {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        height: calc(var(--nav-h) + var(--safe-b));
+        padding-bottom: var(--safe-b);
+        background: rgba(255,255,255,0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: stretch;
+        z-index: 100;
+      }
+      .nav-btn {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 0;
+        color: var(--text-4);
+        font-family: 'Nunito', sans-serif;
+        font-size: 10px;
+        font-weight: 600;
+        transition: color 0.15s;
+      }
+      .nav-btn svg { width: 20px; height: 20px; stroke-width: 1.8; }
+      .nav-btn.active { color: var(--accent); }
+      .nav-btn.active svg { stroke-width: 2.2; }
     }
 
-    /* pill tabs */
-    .tabs {
-      margin-left: auto;
-      display: flex;
-      gap: 6px;
-    }
-
-    .tab-btn {
-      font-family: 'Nunito', sans-serif;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--text-3);
-      background: none;
-      border: 1.5px solid transparent;
-      padding: 5px 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.18s;
-      letter-spacing: 0.01em;
-    }
-    .tab-btn:hover {
-      color: var(--accent);
-      background: var(--accent-lt);
-    }
-    .tab-btn.active {
-      color: var(--white);
-      background: var(--accent);
-      border-color: var(--accent);
-      box-shadow: 0 3px 10px rgba(91,170,138,0.28);
-    }
-
-    /* ── Layout ── */
-    .main {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── Sidebar ── */
-    .sidebar {
-      width: var(--sidebar-w);
-      background: rgba(255,255,255,0.55);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-right: 1px solid var(--border);
-      overflow-y: auto;
-      flex-shrink: 0;
-      padding: 18px 10px;
-    }
-    .sidebar::-webkit-scrollbar { width: 0; }
-
-    .sb-label {
-      font-size: 10.5px;
-      font-weight: 700;
-      color: var(--text-4);
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      padding: 0 8px 10px;
-    }
-
-    .ch-btn {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      background: none;
-      border: none;
-      font-family: 'Nunito', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-2);
-      padding: 7px 8px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.15s;
-    }
-    .ch-btn:hover { background: var(--accent-lt); color: var(--accent-dk); }
-    .ch-btn.active {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 3px 10px rgba(91,170,138,0.25);
-    }
-
-    .ch-pill {
-      width: 24px; height: 24px;
-      border-radius: 7px;
-      background: var(--bg2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 10px; font-weight: 700;
-      color: var(--text-3);
-      flex-shrink: 0;
-      transition: all 0.15s;
-    }
-    .ch-btn.active .ch-pill {
-      background: rgba(255,255,255,0.25);
-      color: white;
-    }
-
-    /* ── Content ── */
-    .content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 28px 32px;
-    }
-    .content::-webkit-scrollbar { width: 5px; }
-    .content::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
-
+    /* ══════════════════════════════════
+       SHARED styles (both breakpoints)
+    ══════════════════════════════════ */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    .ch-header {
-      margin-bottom: 22px;
-      animation: fadeUp 0.22s ease;
-    }
-    .ch-header h2 {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.02em;
-      margin-bottom: 3px;
-    }
-    .ch-header .meta {
-      font-size: 12.5px;
-      color: var(--text-3);
-      font-weight: 500;
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
     }
 
-    /* ── Section label ── */
+    .ch-header { margin-bottom: 18px; animation: fadeUp 0.22s ease; }
+    .ch-header h2 { font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin-bottom: 3px; }
+    .ch-header .meta { color: var(--text-3); font-weight: 500; }
+
     .sec-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-4);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin: 20px 0 9px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 700; color: var(--text-4);
+      text-transform: uppercase; letter-spacing: 0.08em; margin: 18px 0 8px;
     }
-    .sec-label::before {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.5;
-    }
+    .sec-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
 
-    /* ── Audio list ── */
     .audio-list {
       background: rgba(255,255,255,0.85);
       border-radius: var(--radius);
@@ -245,209 +257,193 @@
       box-shadow: 0 2px 16px rgba(91,170,138,0.07), 0 1px 0 rgba(255,255,255,0.9) inset;
       animation: fadeUp 0.28s ease;
     }
-
     .audio-row {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 11px 16px;
-      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 13px;
+      padding: 11px 16px; border-bottom: 1px solid var(--border);
       transition: background 0.13s;
     }
     .audio-row:last-child { border-bottom: none; }
-    .audio-row:hover { background: rgba(91,170,138,0.04); }
-    .audio-row.playing { background: rgba(91,170,138,0.08); }
+    .audio-row:active { background: rgba(91,170,138,0.06); }
 
-    /* play button */
     .play-btn {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      border: none;
-      background: var(--accent-lt);
-      color: var(--accent);
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.16s;
+      width: 32px; height: 32px; border-radius: 50%; border: none;
+      background: var(--accent-lt); color: var(--accent);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.16s;
     }
-    .play-btn:hover {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 3px 10px rgba(91,170,138,0.35);
-      transform: scale(1.07);
-    }
-    .audio-row.playing .play-btn {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 3px 10px rgba(91,170,138,0.3);
-    }
+    .play-btn:active { background: var(--accent); color: white; transform: scale(0.94); }
     .play-btn svg { width: 11px; height: 11px; }
     .play-btn .tri { margin-left: 1.5px; }
 
-    /* row info */
     .row-info { flex: 1; min-width: 0; }
     .row-name {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: -0.005em;
-      margin-bottom: 5px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 13px; font-weight: 600; color: var(--text);
+      letter-spacing: -0.005em; margin-bottom: 4px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .audio-row.playing .row-name { color: var(--accent-dk); }
+    .row-prog { display: flex; align-items: center; gap: 9px; }
+    .prog-track { flex: 1; height: 3px; background: var(--border); border-radius: 2px; }
+    .prog-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dk)); border-radius: 2px; width: 0%; }
+    .row-time { font-size: 11px; color: var(--text-4); font-weight: 500; min-width: 44px; text-align: right; }
 
-    .row-prog {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
-
-    .prog-track {
-      flex: 1;
-      height: 3px;
-      background: var(--border);
-      border-radius: 2px;
-      cursor: pointer;
-      position: relative;
-    }
-    .prog-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-dk));
-      border-radius: 2px;
-      width: 0%;
-      transition: width 0.1s linear;
-    }
-
-    .row-time {
-      font-size: 11px;
-      color: var(--text-4);
-      font-weight: 500;
-      font-variant-numeric: tabular-nums;
-      min-width: 70px;
-      text-align: right;
-    }
-
-    /* wave anim */
-    @keyframes wb {
-      0%,100% { transform: scaleY(0.3); }
-      50%      { transform: scaleY(1); }
-    }
-    .wave { display: flex; align-items: center; gap: 2px; height: 13px; }
-    .wb {
-      width: 2.5px; border-radius: 2px;
-      background: white;
-      animation: wb 0.72s ease-in-out infinite;
-    }
-    .wb:nth-child(1){ height:55%; animation-delay:0s; }
-    .wb:nth-child(2){ height:100%; animation-delay:.14s; }
-    .wb:nth-child(3){ height:70%; animation-delay:.28s; }
-    .wb:nth-child(4){ height:85%; animation-delay:.42s; }
-
-    /* empty */
     .empty {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      height: 260px;
-      color: var(--text-4);
-      gap: 12px;
-      font-size: 13.5px;
-      font-weight: 500;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 260px; color: var(--text-4); gap: 12px; font-size: 13.5px; font-weight: 500;
     }
     .empty svg { opacity: 0.35; }
 
-    /* little leaf decoration */
-    .leaf {
-      position: fixed;
-      bottom: 28px; right: 32px;
-      font-size: 48px;
-      opacity: 0.07;
-      pointer-events: none;
-      user-select: none;
-      z-index: 0;
+    /* ── Chapter Drawer (mobile) ── */
+    .drawer-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(30,50,40,0.35);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      z-index: 150;
     }
+    .drawer-overlay.open { display: block; }
 
-    /* ── iframe player overlay ── */
+    .drawer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--white);
+      border-radius: 20px 20px 0 0;
+      z-index: 151;
+      max-height: 75vh;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.32,0.72,0,1);
+      padding-bottom: var(--safe-b);
+    }
+    .drawer.open { transform: translateY(0); }
+
+    .drawer-handle {
+      width: 36px; height: 4px;
+      background: var(--border2); border-radius: 2px;
+      margin: 12px auto 4px;
+      flex-shrink: 0;
+    }
+    .drawer-head {
+      padding: 8px 18px 12px;
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .drawer-title { font-size: 13px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* Book tabs inside drawer */
+    .drawer-books {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 10px 18px;
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .book-pill {
+      font-family: 'Nunito', sans-serif;
+      font-size: 11.5px; font-weight: 700;
+      border: 1.5px solid var(--border2);
+      background: none; color: var(--text-3);
+      padding: 5px 12px; border-radius: 20px;
+      cursor: pointer; transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .book-pill.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+    .drawer-chapters {
+      overflow-y: auto;
+      padding: 10px 12px 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .dch-btn {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2px; padding: 10px 4px;
+      background: var(--bg2); border: 1.5px solid transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer; transition: all 0.15s;
+      font-family: 'Nunito', sans-serif;
+    }
+    .dch-num { font-size: 16px; font-weight: 700; color: var(--text); }
+    .dch-lbl { font-size: 9.5px; font-weight: 600; color: var(--text-3); }
+    .dch-btn.active { background: var(--accent); border-color: var(--accent); }
+    .dch-btn.active .dch-num, .dch-btn.active .dch-lbl { color: white; }
+    .dch-btn:active { transform: scale(0.94); }
+
+    /* ── iframe Player — bottom sheet on mobile, centered on desktop ── */
     .player-overlay {
       display: none;
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background: rgba(30,50,40,0.45);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       z-index: 200;
-      align-items: center;
+      align-items: flex-end;   /* mobile: sheet from bottom */
       justify-content: center;
     }
     .player-overlay.open { display: flex; }
 
     .player-box {
       background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.22);
-      padding: 20px;
+      width: 100%;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
+      padding: 0 20px 20px;
+      padding-bottom: calc(20px + var(--safe-b));
       display: flex;
       flex-direction: column;
       gap: 14px;
-      min-width: 320px;
-      max-width: 92vw;
-      animation: fadeUp 0.2s ease;
+      animation: slideUp 0.3s cubic-bezier(0.32,0.72,0,1);
+    }
+
+    .player-handle {
+      width: 36px; height: 4px;
+      background: var(--border2); border-radius: 2px;
+      margin: 12px auto 2px;
     }
 
     .player-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
     .player-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.01em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 15px; font-weight: 700; color: var(--text);
+      letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .player-close {
-      width: 28px; height: 28px;
-      border: none;
-      background: var(--bg2);
-      border-radius: 50%;
-      cursor: pointer;
+      width: 30px; height: 30px; border: none; background: var(--bg2);
+      border-radius: 50%; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      color: var(--text-3);
-      font-size: 16px;
-      transition: background 0.15s;
+      flex-shrink: 0; color: var(--text-3); font-size: 15px; transition: background 0.15s;
     }
-    .player-close:hover { background: var(--soft-pink); color: #c0504d; }
+    .player-close:active { background: var(--soft-pink); color: #c0504d; }
 
     .player-iframe {
-      width: 100%;
-      height: 80px;
-      border: none;
-      border-radius: var(--radius-sm);
-      background: var(--bg2);
+      width: 100%; height: 80px; border: none;
+      border-radius: var(--radius-sm); background: var(--bg2);
     }
+    .player-note { font-size: 11px; color: var(--text-4); text-align: center; }
+    .player-note a { color: var(--accent); text-decoration: none; }
 
-    .player-note {
-      font-size: 11px;
-      color: var(--text-4);
-      text-align: center;
+    /* on desktop override to centered card */
+    @media (min-width: 640px) {
+      .player-overlay { align-items: center; }
+      .player-box {
+        width: auto; min-width: 340px; max-width: 92vw;
+        border-radius: var(--radius);
+        box-shadow: 0 24px 60px rgba(0,0,0,0.22);
+        padding: 20px;
+        animation: fadeUp 0.2s ease;
+      }
+      .player-handle { display: none; }
     }
-    .player-note a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    .player-note a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
 
-<div class="leaf">🍃</div>
-
+<!-- ═══ DESKTOP: original header ═══ -->
 <header>
   <div class="logo">
     <span class="logo-jp">元気</span>
@@ -456,14 +452,59 @@
   <div class="tabs" id="tabs"></div>
 </header>
 
+<!-- ═══ MOBILE: compact header ═══ -->
+<div class="mob-header">
+  <div class="mob-logo">
+    <span class="mob-logo-jp">元気</span>
+    <span class="mob-logo-en">Genki Audio</span>
+  </div>
+  <button class="mob-chapter-btn" id="mobChapterBtn" onclick="openDrawer()">
+    <span id="mobChapterLabel">Chapter —</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</div>
+
+<!-- ═══ MAIN ═══ -->
 <div class="main">
   <aside class="sidebar" id="sidebar"></aside>
   <section class="content" id="content"></section>
 </div>
 
-<!-- iframe audio player overlay -->
+<!-- ═══ MOBILE: Bottom Nav ═══ -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="nav-btn active" id="navTb1" onclick="switchBook('genki1_textbook', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
+    Genki I TB
+  </button>
+  <button class="nav-btn" id="navWb1" onclick="switchBook('genki1_workbook', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+    Genki I WB
+  </button>
+  <button class="nav-btn" id="navTb2" onclick="switchBook('genki2_textbook', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/><path d="M9 10h6M9 14h4"/></svg>
+    Genki II TB
+  </button>
+  <button class="nav-btn" id="navWb2" onclick="switchBook('genki2_workbook', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/><circle cx="10" cy="9" r="1" fill="currentColor"/></svg>
+    Genki II WB
+  </button>
+</nav>
+
+<!-- ═══ MOBILE: Chapter Drawer ═══ -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-head">
+    <div class="drawer-title">选择章节</div>
+  </div>
+  <div class="drawer-books" id="drawerBooks"></div>
+  <div class="drawer-chapters" id="drawerChapters"></div>
+</div>
+
+<!-- ═══ SHARED: iframe Player ═══ -->
 <div class="player-overlay" id="playerOverlay" onclick="closePlayer(event)">
   <div class="player-box">
+    <div class="player-handle"></div>
     <div class="player-header">
       <div class="player-title" id="playerTitle">—</div>
       <button class="player-close" onclick="closePlayerBtn()">✕</button>
@@ -482,39 +523,32 @@
   let curCh   = null;
 
   const BOOKS = [
-    { key: 'genki1_textbook', label: 'Genki I Textbook'  },
-    { key: 'genki1_workbook', label: 'Genki I Workbook'  },
-    { key: 'genki2_textbook', label: 'Genki II Textbook' },
-    { key: 'genki2_workbook', label: 'Genki II Workbook' },
+    { key: 'genki1_textbook', label: 'Genki I TB',  full: 'Genki I Textbook'  },
+    { key: 'genki1_workbook', label: 'Genki I WB',  full: 'Genki I Workbook'  },
+    { key: 'genki2_textbook', label: 'Genki II TB', full: 'Genki II Textbook' },
+    { key: 'genki2_workbook', label: 'Genki II WB', full: 'Genki II Workbook' },
   ];
 
   const SEC = { K: '会話 · Dialogue', Y: '読み物 · Reading' };
 
-  // Convert any Google Drive URL format → /preview iframe URL
   function toPreviewUrl(url) {
-    // Already a preview URL
     if (url.includes('/preview')) return url;
-    // Extract file ID from common formats
-    const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/) ||
-              url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
     if (m) return `https://drive.google.com/file/d/${m[1]}/preview`;
-    return url; // fallback: return as-is
+    return url;
   }
-
-  // Convert any Google Drive URL → direct /view link for "open" button
   function toViewUrl(url) {
-    const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/) ||
-              url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
     if (m) return `https://drive.google.com/file/d/${m[1]}/view`;
     return url;
   }
 
-  // Tabs
+  /* ── Desktop Tabs ── */
   const tabsEl = document.getElementById('tabs');
   BOOKS.forEach(b => {
     const btn = document.createElement('button');
     btn.className = 'tab-btn' + (b.key === curBook ? ' active' : '');
-    btn.textContent = b.label;
+    btn.textContent = b.full;
     btn.onclick = () => {
       curBook = b.key; curCh = null;
       document.querySelectorAll('.tab-btn').forEach((t,i) => t.classList.toggle('active', BOOKS[i].key === b.key));
@@ -523,7 +557,18 @@
     tabsEl.appendChild(btn);
   });
 
-  // Sidebar
+  /* ── Mobile: switch book from bottom nav ── */
+  function switchBook(key, el) {
+    curBook = key; curCh = null;
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    renderDrawerBooks();
+    renderDrawerChapters();
+    renderContent();
+    updateMobChapterLabel();
+  }
+
+  /* ── Desktop Sidebar ── */
   function renderSidebar() {
     const el = document.getElementById('sidebar');
     const chs = Object.keys(audioData[curBook] || {}).sort();
@@ -544,50 +589,108 @@
       b.classList.toggle('active', b.querySelector('.ch-pill')?.textContent == parseInt(ch));
     });
     renderContent();
+    updateMobChapterLabel();
   }
 
-  // Content
+  /* ── Mobile Drawer ── */
+  function renderDrawerBooks() {
+    const el = document.getElementById('drawerBooks');
+    el.innerHTML = '';
+    BOOKS.forEach(b => {
+      const btn = document.createElement('button');
+      btn.className = 'book-pill' + (b.key === curBook ? ' active' : '');
+      btn.textContent = b.full;
+      btn.onclick = () => {
+        curBook = b.key; curCh = null;
+        // sync bottom nav
+        const navMap = { genki1_textbook: 'navTb1', genki1_workbook: 'navWb1', genki2_textbook: 'navTb2', genki2_workbook: 'navWb2' };
+        document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
+        document.getElementById(navMap[b.key])?.classList.add('active');
+        renderDrawerBooks();
+        renderDrawerChapters();
+        renderContent();
+        updateMobChapterLabel();
+      };
+      el.appendChild(btn);
+    });
+  }
+
+  function renderDrawerChapters() {
+    const el = document.getElementById('drawerChapters');
+    const chs = Object.keys(audioData[curBook] || {}).sort();
+    el.innerHTML = '';
+    chs.forEach(ch => {
+      const btn = document.createElement('button');
+      btn.className = 'dch-btn' + (ch === curCh ? ' active' : '');
+      btn.innerHTML = `<div class="dch-num">${parseInt(ch)}</div><div class="dch-lbl">Ch.</div>`;
+      btn.onclick = () => {
+        curCh = ch;
+        renderDrawerChapters();
+        renderContent();
+        updateMobChapterLabel();
+        closeDrawer();
+      };
+      el.appendChild(btn);
+    });
+    // auto-pick first if none
+    if (!curCh && chs.length) {
+      curCh = chs[0];
+      renderDrawerChapters();
+      renderContent();
+      updateMobChapterLabel();
+    }
+  }
+
+  function updateMobChapterLabel() {
+    const lbl = document.getElementById('mobChapterLabel');
+    if (lbl) lbl.textContent = curCh ? `Chapter ${parseInt(curCh)}` : 'Select Chapter';
+  }
+
+  function openDrawer() {
+    renderDrawerBooks();
+    renderDrawerChapters();
+    document.getElementById('drawerOverlay').classList.add('open');
+    document.getElementById('drawer').classList.add('open');
+  }
+  function closeDrawer() {
+    document.getElementById('drawerOverlay').classList.remove('open');
+    document.getElementById('drawer').classList.remove('open');
+  }
+
+  /* ── Content ── */
   function renderContent() {
     const el = document.getElementById('content');
     if (!curCh) {
       el.innerHTML = `<div class="empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19V6l12-3v13M9 19c0 1.1-1.34 2-3 2s-3-.9-3-2 1.34-2 3-2 3 .9 3 2zm12-3c0 1.1-1.34 2-3 2s-3-.9-3-2 1.34-2 3-2 3 .9 3 2z"/></svg>Select a chapter to begin</div>`;
       return;
     }
-
     const files = (audioData[curBook][curCh] || []).slice().sort((a,b) => a.name.localeCompare(b.name));
     if (!files.length) {
       el.innerHTML = `<div class="empty">No audio files yet — add some to data.js ✨</div>`;
       return;
     }
-
     const groups = {};
     files.forEach(f => {
       const pre = (f.name.match(/^([A-Za-z]+)/)?.[1] || 'O').toUpperCase();
       if (!groups[pre]) groups[pre] = [];
       groups[pre].push(f);
     });
-
     const bk = BOOKS.find(b => b.key === curBook);
-    let html = `<div class="ch-header"><h2>Chapter ${parseInt(curCh)}</h2><div class="meta">${bk.label} · ${files.length} tracks</div></div>`;
-
+    let html = `<div class="ch-header"><h2>Chapter ${parseInt(curCh)}</h2><div class="meta">${bk.full} · ${files.length} tracks</div></div>`;
     Object.entries(groups).forEach(([pre, gf]) => {
       html += `<div class="sec-label">${SEC[pre] || 'Audio'}</div><div class="audio-list">`;
       gf.forEach((file, i) => {
-        const id = `${curBook}-${curCh}-${pre}-${i}`;
-        // Escape the URL safely for inline onclick
-        const escapedUrl = file.url.replace(/'/g, "\\'");
+        const escapedUrl  = file.url.replace(/'/g, "\\'");
         const escapedName = file.name.replace(/'/g, "\\'");
         html += `
-          <div class="audio-row" id="row-${id}">
-            <button class="play-btn" id="btn-${id}" onclick="openPlayer('${escapedUrl}','${escapedName}')">
+          <div class="audio-row">
+            <button class="play-btn" onclick="openPlayer('${escapedUrl}','${escapedName}')">
               <svg viewBox="0 0 24 24" fill="currentColor" class="tri"><polygon points="5,3 19,12 5,21"/></svg>
             </button>
             <div class="row-info">
               <div class="row-name">${file.name}</div>
               <div class="row-prog">
-                <div class="prog-track">
-                  <div class="prog-fill"></div>
-                </div>
+                <div class="prog-track"><div class="prog-fill"></div></div>
                 <div class="row-time">— / —</div>
               </div>
             </div>
@@ -595,36 +698,27 @@
       });
       html += `</div>`;
     });
-
     el.innerHTML = html;
   }
 
-  // iframe Player overlay
+  /* ── Player ── */
   function openPlayer(url, name) {
-    const previewUrl = toPreviewUrl(url);
-    const viewUrl    = toViewUrl(url);
     document.getElementById('playerTitle').textContent = name;
-    document.getElementById('playerFrame').src = previewUrl;
-    document.getElementById('playerLink').href = viewUrl;
+    document.getElementById('playerFrame').src = toPreviewUrl(url);
+    document.getElementById('playerLink').href  = toViewUrl(url);
     document.getElementById('playerOverlay').classList.add('open');
   }
-
   function closePlayerBtn() {
     document.getElementById('playerOverlay').classList.remove('open');
-    document.getElementById('playerFrame').src = ''; // stop audio
+    document.getElementById('playerFrame').src = '';
   }
-
   function closePlayer(e) {
-    // only close if clicking the backdrop, not the box
     if (e.target === document.getElementById('playerOverlay')) closePlayerBtn();
   }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePlayerBtn(); });
 
-  // Close on Escape
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closePlayerBtn();
-  });
-
-  renderSidebar();
+  /* ── Init ── */
+  renderSidebar();   // desktop
   renderContent();
 </script>
 </body>
