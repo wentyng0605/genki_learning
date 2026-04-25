@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Genki Audio Player</title>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f0e0c;
+      --surface: #1a1916;
+      --surface2: #222120;
+      --border: #2e2c29;
+      --accent: #e8c547;
+      --accent2: #c9a227;
+      --text: #f0ece3;
+      --text-muted: #7a756a;
+      --text-dim: #4a4640;
+      --red: #e05a3a;
+      --sidebar-w: 220px;
+      --tab-h: 56px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header {
+      height: var(--tab-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 32px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+
+    .logo span {
+      color: var(--text-muted);
+      font-weight: 400;
+      font-size: 13px;
+      margin-left: 8px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .tab-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 16px;
+      right: 16px;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.2s;
+    }
+
+    .tab-btn:hover { color: var(--text); background: var(--surface2); }
+    .tab-btn.active { color: var(--accent); }
+    .tab-btn.active::after { transform: scaleX(1); }
+
+    /* ── Main layout ── */
+    .main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      flex-shrink: 0;
+      padding: 16px 0;
+    }
+
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .sidebar-label {
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 0 20px 10px;
+    }
+
+    .chapter-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      padding: 10px 20px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+      border-left: 2px solid transparent;
+    }
+
+    .chapter-btn .ch-num {
+      font-size: 9px;
+      color: var(--text-dim);
+      width: 20px;
+      flex-shrink: 0;
+    }
+
+    .chapter-btn:hover {
+      color: var(--text);
+      background: var(--surface2);
+    }
+
+    .chapter-btn.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: rgba(232, 197, 71, 0.06);
+    }
+
+    .chapter-btn.active .ch-num { color: var(--accent2); }
+
+    /* ── Content ── */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 36px;
+    }
+
+    .content::-webkit-scrollbar { width: 4px; }
+    .content::-webkit-scrollbar-track { background: transparent; }
+    .content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .content-header {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .content-header h2 {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .content-header .meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Audio sections (Y / K) ── */
+    .audio-section {
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Audio card ── */
+    .audio-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+
+    .audio-card:hover {
+      border-color: var(--accent2);
+      background: var(--surface2);
+    }
+
+    .audio-card.playing {
+      border-color: var(--accent);
+      background: rgba(232, 197, 71, 0.05);
+    }
+
+    .play-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .play-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    .audio-card.playing .play-btn {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    .play-btn svg { width: 14px; height: 14px; }
+
+    .audio-info { flex: 1; min-width: 0; }
+
+    .audio-name {
+      font-size: 12px;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .audio-card.playing .audio-name { color: var(--accent); }
+
+    /* ── Progress bar ── */
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .time-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      white-space: nowrap;
+      min-width: 70px;
+      text-align: right;
+    }
+
+    /* ── Empty state ── */
+    .empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      color: var(--text-dim);
+      font-size: 13px;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .empty svg { opacity: 0.3; }
+
+    /* ── Waveform animation ── */
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.4); }
+      50% { transform: scaleY(1); }
+    }
+
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      height: 16px;
+    }
+
+    .wave-bar {
+      width: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+      animation: wave 0.8s ease-in-out infinite;
+    }
+    .wave-bar:nth-child(1) { animation-delay: 0s; height: 60%; }
+    .wave-bar:nth-child(2) { animation-delay: 0.15s; height: 100%; }
+    .wave-bar:nth-child(3) { animation-delay: 0.3s; height: 70%; }
+    .wave-bar:nth-child(4) { animation-delay: 0.45s; height: 90%; }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* scrollbar for content */
+    .content::-webkit-scrollbar { width: 4px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">元気 Genki <span>Audio Library</span></div>
+  <div class="tabs" id="tabs"></div>
+</header>
+
+<div class="main">
+  <aside class="sidebar" id="sidebar"></aside>
+  <section class="content" id="content"></section>
+</div>
+
+<script src="data.js"></script>
+<script>
+  // ── State ──
+  let currentBook = 'genki1_textbook';
+  let currentChapter = null;
+  let currentAudio = null;
+  let currentCard = null;
+
+  const BOOKS = [
+    { key: 'genki1_textbook', label: 'Genki I — Textbook' },
+    { key: 'genki1_workbook', label: 'Genki I — Workbook' },
+    { key: 'genki2_textbook', label: 'Genki II — Textbook' },
+    { key: 'genki2_workbook', label: 'Genki II — Workbook' },
+  ];
+
+  const SECTION_LABELS = {
+    Y: 'Reading Practice (読み物)',
+    K: 'Dialogue (会話)',
+    OTHER: 'Audio',
+  };
+
+  // ── Build Tabs ──
+  const tabsEl = document.getElementById('tabs');
+  BOOKS.forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (b.key === currentBook ? ' active' : '');
+    btn.textContent = b.label;
+    btn.onclick = () => selectBook(b.key);
+    tabsEl.appendChild(btn);
+  });
+
+  function selectBook(key) {
+    currentBook = key;
+    currentChapter = null;
+    document.querySelectorAll('.tab-btn').forEach((b, i) => {
+      b.classList.toggle('active', BOOKS[i].key === key);
+    });
+    renderSidebar();
+    renderContent();
+  }
+
+  // ── Sidebar ──
+  function renderSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const chapters = Object.keys(audioData[currentBook] || {}).sort();
+    sidebar.innerHTML = `<div class="sidebar-label">Chapters</div>`;
+    chapters.forEach(ch => {
+      const btn = document.createElement('button');
+      btn.className = 'chapter-btn' + (ch === currentChapter ? ' active' : '');
+      btn.innerHTML = `<span class="ch-num">${ch}</span> Chapter ${parseInt(ch)}`;
+      btn.onclick = () => selectChapter(ch);
+      sidebar.appendChild(btn);
+    });
+    // auto-select first
+    if (!currentChapter && chapters.length) selectChapter(chapters[0]);
+  }
+
+  function selectChapter(ch) {
+    currentChapter = ch;
+    document.querySelectorAll('.chapter-btn').forEach(b => {
+      b.classList.toggle('active', b.querySelector('.ch-num')?.textContent === ch);
+    });
+    renderContent();
+  }
+
+  // ── Content ──
+  function renderContent() {
+    const content = document.getElementById('content');
+    if (!currentChapter) {
+      content.innerHTML = `<div class="empty"><svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg><span>Select a chapter</span></div>`;
+      return;
+    }
+
+    const files = (audioData[currentBook][currentChapter] || []).slice().sort((a, b) => a.name.localeCompare(b.name));
+    if (!files.length) {
+      content.innerHTML = `<div class="empty"><span>No audio files found.</span></div>`;
+      return;
+    }
+
+    // group by prefix
+    const groups = {};
+    files.forEach(f => {
+      const prefix = f.name.match(/^([A-Za-z]+)/)?.[1]?.toUpperCase() || 'OTHER';
+      if (!groups[prefix]) groups[prefix] = [];
+      groups[prefix].push(f);
+    });
+
+    const bookLabel = BOOKS.find(b => b.key === currentBook)?.label || '';
+    const totalFiles = files.length;
+
+    let html = `
+      <div class="content-header">
+        <h2>Chapter ${parseInt(currentChapter)}</h2>
+        <span class="meta">${bookLabel} · ${totalFiles} tracks</span>
+      </div>
+    `;
+
+    Object.entries(groups).forEach(([prefix, groupFiles]) => {
+      const sectionLabel = SECTION_LABELS[prefix] || SECTION_LABELS.OTHER;
+      html += `<div class="audio-section"><div class="section-title">${sectionLabel}</div>`;
+      groupFiles.forEach((file, idx) => {
+        const id = `audio-${currentBook}-${currentChapter}-${prefix}-${idx}`;
+        html += `
+          <div class="audio-card" id="card-${id}">
+            <button class="play-btn" onclick="togglePlay('${id}', '${file.url}', this)" title="Play">
+              ${playIcon()}
+            </button>
+            <div class="audio-info">
+              <div class="audio-name">${file.name}</div>
+              <div class="progress-wrap">
+                <div class="progress-bar" id="bar-${id}" onclick="seekAudio(event, '${id}')">
+                  <div class="progress-fill" id="fill-${id}"></div>
+                </div>
+                <div class="time-label" id="time-${id}">0:00 / 0:00</div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      html += `</div>`;
+    });
+
+    content.innerHTML = html;
+  }
+
+  // ── Icons ──
+  function playIcon() {
+    return `<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>`;
+  }
+  function pauseIcon() {
+    return `<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
+  }
+  function waveIcon() {
+    return `<div class="wave-bars"><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div></div>`;
+  }
+
+  // ── Audio playback ──
+  function togglePlay(id, url, btn) {
+    const card = document.getElementById('card-' + id);
+
+    if (currentAudio && currentCard === id) {
+      if (currentAudio.paused) {
+        currentAudio.play();
+        btn.innerHTML = pauseIcon();
+        card.classList.add('playing');
+      } else {
+        currentAudio.pause();
+        btn.innerHTML = playIcon();
+        card.classList.remove('playing');
+      }
+      return;
+    }
+
+    // stop previous
+    if (currentAudio) {
+      currentAudio.pause();
+      const prevCard = document.getElementById('card-' + currentCard);
+      const prevBtn = prevCard?.querySelector('.play-btn');
+      if (prevBtn) prevBtn.innerHTML = playIcon();
+      prevCard?.classList.remove('playing');
+      const prevFill = document.getElementById('fill-' + currentCard);
+      if (prevFill) prevFill.style.width = '0%';
+    }
+
+    // new audio
+    const audio = new Audio(url);
+    currentAudio = audio;
+    currentCard = id;
+
+    audio.addEventListener('timeupdate', () => {
+      const fill = document.getElementById('fill-' + id);
+      const time = document.getElementById('time-' + id);
+      if (!fill || !time) return;
+      const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+      fill.style.width = pct + '%';
+      time.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration || 0)}`;
+    });
+
+    audio.addEventListener('ended', () => {
+      btn.innerHTML = playIcon();
+      card.classList.remove('playing');
+      const fill = document.getElementById('fill-' + id);
+      if (fill) fill.style.width = '0%';
+      currentAudio = null;
+      currentCard = null;
+    });
+
+    audio.play();
+    btn.innerHTML = pauseIcon();
+    card.classList.add('playing');
+  }
+
+  function seekAudio(e, id) {
+    if (!currentAudio || currentCard !== id) return;
+    const bar = document.getElementById('bar-' + id);
+    const rect = bar.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    currentAudio.currentTime = pct * currentAudio.duration;
+  }
+
+  function fmt(s) {
+    if (isNaN(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60).toString().padStart(2, '0');
+    return `${m}:${sec}`;
+  }
+
+  // ── Init ──
+  renderSidebar();
+  renderContent();
+</script>
+</body>
+</html>
