@@ -17,10 +17,10 @@ const audioData = {
   // ════════════════════════════════
   genki1_textbook: {
     "01": [
-      { name: "K01_01.mp3", url: "https://drive.google.com/uc?export=open&id=19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB" },
-      { name: "K01_02.mp3", url: "https://drive.google.com/uc?export=open&id=19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB" },
-      { name: "K01_03.mp3", url: "https://drive.google.com/uc?export=open&id=19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB" },
-      { name: "Y01.mp3",    url: "https://drive.google.com/uc?export=open&id=19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB" },
+      { name: "K01_01.mp3", url: "https://drive.google.com/file/d/1w6nSodxjGhAuu-P9EvHgadMACM0gF7cm/view?usp=drive_link" },
+      { name: "K01_02.mp3", url: "https://drive.google.com/file/d/1nDY3T1DmXkroTRVEftS-U2NNHO6wD9RF/view?usp=drive_link" },
+      { name: "K01_03.mp3", url: "https://drive.google.com/file/d/1nDY3T1DmXkroTRVEftS-U2NNHO6wD9RF/view?usp=drive_link" },
+      { name: "Y01.mp3",    url: "https://drive.google.com/file/d/1nDY3T1DmXkroTRVEftS-U2NNHO6wD9RF/view?usp=drive_link" },
       // Add more files here...
     ],
     "02": [
