@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>元気 Genki Audio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:         #f4f8f6;
+      --white:      #ffffff;
+      --border:     #dde8e3;
+      --border2:    #c6d9d1;
+
+      /* K part — green */
+      --k-accent:   #4da87c;
+      --k-dark:     #34855f;
+      --k-light:    rgba(77,168,124,0.11);
+      --k-lighter:  rgba(77,168,124,0.06);
+      --k-label:    #2e7a58;
+
+      /* Y part — orange */
+      --y-accent:   #e07a3a;
+      --y-dark:     #b85e22;
+      --y-light:    rgba(224,122,58,0.11);
+      --y-lighter:  rgba(224,122,58,0.06);
+      --y-label:    #b85e22;
+
+      --text:       #253330;
+      --text-2:     #4a6660;
+      --text-3:     #7a9e96;
+      --text-4:     #adc6bf;
+
+      --sidebar-w:  210px;
+      --header-h:   54px;
+      --radius:     13px;
+      --radius-sm:  8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 55% 45% at 5%  0%,  rgba(77,168,124,0.09)  0%, transparent 60%),
+        radial-gradient(ellipse 45% 40% at 95% 95%, rgba(224,122,58,0.07)  0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 85% 5%,  rgba(255,235,220,0.45) 0%, transparent 55%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ══════════════════════════════
+       HEADER
+    ══════════════════════════════ */
+    header {
+      height: var(--header-h);
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 14px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 100;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 4.5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hamburger span {
+      display: block;
+      width: 20px; height: 2px;
+      background: var(--k-accent);
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .logo {
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+    }
+    .logo-jp {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--k-dark);
+    }
+    .logo-en {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+    }
+
+    /* pill tabs */
+    .tabs {
+      margin-left: auto;
+      display: flex;
+      gap: 5px;
+    }
+    .tab-btn {
+      font-family: 'Nunito', sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-3);
+      background: none;
+      border: 1.5px solid transparent;
+      padding: 5px 13px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.18s;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tab-btn:hover { color: var(--k-accent); background: var(--k-light); }
+    .tab-btn.active {
+      color: var(--white);
+      background: var(--k-accent);
+      border-color: var(--k-accent);
+      box-shadow: 0 3px 10px rgba(77,168,124,0.28);
+    }
+
+    /* ══════════════════════════════
+       LAYOUT
+    ══════════════════════════════ */
+    .main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: rgba(255,255,255,0.52);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      flex-shrink: 0;
+      padding: 14px 10px;
+      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+    .sidebar::-webkit-scrollbar { width: 0; }
+
+    .sb-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-4);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0 8px 9px;
+    }
+
+    .ch-btn {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.14s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .ch-btn:hover { background: var(--k-light); color: var(--k-dark); }
+    .ch-btn.active {
+      background: var(--k-accent);
+      color: white;
+      box-shadow: 0 3px 10px rgba(77,168,124,0.22);
+    }
+    .ch-pill {
+      width: 23px; height: 23px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.06);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700;
+      color: var(--text-3);
+      flex-shrink: 0;
+      transition: all 0.14s;
+    }
+    .ch-btn.active .ch-pill { background: rgba(255,255,255,0.22); color: white; }
+
+    /* overlay */
+    .overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.16);
+      z-index: 49;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
+    /* ── Content ── */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 26px 28px;
+    }
+    .content::-webkit-scrollbar { width: 5px; }
+    .content::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(9px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Chapter header ── */
+    .ch-header {
+      margin-bottom: 20px;
+      animation: fadeUp 0.2s ease;
+    }
+    .ch-header h2 {
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 3px;
+    }
+    .ch-header .meta { font-size: 12px; color: var(--text-3); font-weight: 500; }
+
+    /* ── Part block (K / Y) ── */
+    .part-block {
+      margin-bottom: 28px;
+      animation: fadeUp 0.25s ease;
+    }
+
+    /* Part header bar */
+    .part-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .part-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+    .part-badge.k { background: var(--k-light); color: var(--k-label); }
+    .part-badge.y { background: var(--y-light); color: var(--y-label); }
+
+    .part-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-2);
+    }
+    .part-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Sub-section (课文 / 单词 / 练习) ── */
+    .sub-section { margin-bottom: 10px; }
+
+    .sub-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 6px;
+    }
+    .sub-label .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    /* K colours */
+    .sub-label.k-dialogue  { color: var(--k-dark);  }
+    .sub-label.k-vocab     { color: #2d8cb0; }
+    .sub-label.k-practice  { color: #7a5ea8; }
+    .sub-label.k-dialogue .dot  { background: var(--k-accent); }
+    .sub-label.k-vocab .dot     { background: #4aaad0; }
+    .sub-label.k-practice .dot  { background: #9b7fd4; }
+    /* Y colours */
+    .sub-label.y-dialogue  { color: var(--y-dark); }
+    .sub-label.y-vocab     { color: #2d8cb0; }
+    .sub-label.y-practice  { color: #7a5ea8; }
+    .sub-label.y-dialogue .dot  { background: var(--y-accent); }
+    .sub-label.y-vocab .dot     { background: #4aaad0; }
+    .sub-label.y-practice .dot  { background: #9b7fd4; }
+    /* workbook */
+    .sub-label.wk { color: var(--k-dark); }
+    .sub-label.wy { color: var(--y-dark); }
+    .sub-label.wk .dot { background: var(--k-accent); }
+    .sub-label.wy .dot { background: var(--y-accent); }
+
+    /* ── Audio list card ── */
+    .audio-list {
+      background: rgba(255,255,255,0.9);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 2px 14px rgba(60,100,80,0.06);
+    }
+
+    .audio-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+    .audio-row:last-child { border-bottom: none; }
+
+    /* per-type hover tint */
+    .audio-row.type-k:hover,
+    .audio-row.type-wk:hover   { background: var(--k-lighter); }
+    .audio-row.type-y:hover,
+    .audio-row.type-wy:hover   { background: var(--y-lighter); }
+    .audio-row.type-v:hover    { background: rgba(74,170,208,0.06); }
+    .audio-row.type-r:hover    { background: rgba(155,127,212,0.06); }
+
+    .audio-row.playing.type-k,
+    .audio-row.playing.type-wk  { background: var(--k-light); }
+    .audio-row.playing.type-y,
+    .audio-row.playing.type-wy  { background: var(--y-light); }
+    .audio-row.playing.type-v   { background: rgba(74,170,208,0.12); }
+    .audio-row.playing.type-r   { background: rgba(155,127,212,0.12); }
+
+    /* play button colours by type */
+    .play-btn {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .play-btn svg { width: 11px; height: 11px; }
+    .play-btn .tri { margin-left: 1.5px; }
+
+    /* K / WK */
+    .play-btn.pbk  { background: var(--k-light);  color: var(--k-accent); }
+    .play-btn.pbk:hover, .audio-row.playing .play-btn.pbk {
+      background: var(--k-accent); color: white;
+      box-shadow: 0 3px 9px rgba(77,168,124,0.35);
+    }
+    /* Y / WY */
+    .play-btn.pby  { background: var(--y-light);  color: var(--y-accent); }
+    .play-btn.pby:hover, .audio-row.playing .play-btn.pby {
+      background: var(--y-accent); color: white;
+      box-shadow: 0 3px 9px rgba(224,122,58,0.35);
+    }
+    /* Vocab */
+    .play-btn.pbv  { background: rgba(74,170,208,0.13); color: #2d8cb0; }
+    .play-btn.pbv:hover, .audio-row.playing .play-btn.pbv {
+      background: #4aaad0; color: white;
+      box-shadow: 0 3px 9px rgba(74,170,208,0.35);
+    }
+    /* Practice */
+    .play-btn.pbr  { background: rgba(155,127,212,0.13); color: #7a5ea8; }
+    .play-btn.pbr:hover, .audio-row.playing .play-btn.pbr {
+      background: #9b7fd4; color: white;
+      box-shadow: 0 3px 9px rgba(155,127,212,0.35);
+    }
+
+    .row-info { flex: 1; min-width: 0; }
+    .row-name {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .audio-row.playing.type-k  .row-name,
+    .audio-row.playing.type-wk .row-name { color: var(--k-dark); }
+    .audio-row.playing.type-y  .row-name,
+    .audio-row.playing.type-wy .row-name { color: var(--y-dark); }
+    .audio-row.playing.type-v  .row-name { color: #2d8cb0; }
+    .audio-row.playing.type-r  .row-name { color: #7a5ea8; }
+
+    .row-prog {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .prog-track {
+      flex: 1; height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .prog-fill {
+      height: 100%;
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+    /* fill colours */
+    .audio-row.type-k  .prog-fill,
+    .audio-row.type-wk .prog-fill { background: linear-gradient(90deg, var(--k-accent), var(--k-dark)); }
+    .audio-row.type-y  .prog-fill,
+    .audio-row.type-wy .prog-fill { background: linear-gradient(90deg, var(--y-accent), var(--y-dark)); }
+    .audio-row.type-v  .prog-fill { background: linear-gradient(90deg, #4aaad0, #2d8cb0); }
+    .audio-row.type-r  .prog-fill { background: linear-gradient(90deg, #9b7fd4, #7a5ea8); }
+
+    .row-time {
+      font-size: 10.5px;
+      color: var(--text-4);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      min-width: 68px;
+      text-align: right;
+    }
+
+    /* Google Drive iframe player */
+    .gd-player {
+      width: 100%;
+      height: 70px;
+      border: none;
+      border-radius: 0;
+      display: block;
+    }
+
+    /* wave */
+    @keyframes wb {
+      0%,100% { transform: scaleY(0.3); }
+      50%      { transform: scaleY(1); }
+    }
+    .wave { display: flex; align-items: center; gap: 2px; height: 13px; }
+    .wb   { width: 2.5px; border-radius: 2px; animation: wb 0.72s ease-in-out infinite; }
+    .wb:nth-child(1){ height:55%; animation-delay:0s; }
+    .wb:nth-child(2){ height:100%; animation-delay:.14s; }
+    .wb:nth-child(3){ height:70%; animation-delay:.28s; }
+    .wb:nth-child(4){ height:85%; animation-delay:.42s; }
+
+    .empty {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      height: 240px;
+      color: var(--text-4);
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      text-align: center;
+    }
+    .empty svg { opacity: 0.3; }
+
+    .leaf {
+      position: fixed;
+      bottom: 22px; right: 26px;
+      font-size: 42px;
+      opacity: 0.055;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    /* ══════════════════════════════
+       MOBILE bottom book bar
+    ══════════════════════════════ */
+    .mobile-book-bar {
+      display: none;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border);
+      padding: 7px 10px;
+      gap: 5px;
+      overflow-x: auto;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+    .mobile-book-bar::-webkit-scrollbar { display: none; }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 640px) {
+      .tabs     { display: none; }
+      .hamburger{ display: flex; }
+      .logo-en  { display: none; }
+
+      .sidebar {
+        position: fixed;
+        top: var(--header-h);
+        left: 0; bottom: 0;
+        width: 220px;
+        z-index: 50;
+        transform: translateX(-100%);
+        border-right: 1px solid var(--border2);
+        box-shadow: 4px 0 24px rgba(0,0,0,0.07);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .overlay.open { display: block; }
+
+      .mobile-book-bar { display: flex; }
+
+      .content { padding: 16px 14px; }
+      .ch-header h2 { font-size: 19px; }
+      .audio-row { padding: 9px 11px; }
+      .row-name { font-size: 12px; }
+      .row-time { min-width: 58px; font-size: 10px; }
+    }
+
+    @media (max-width: 380px) {
+      .play-btn { width: 28px; height: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="leaf">🍃</div>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- Header -->
+<header>
+  <button class="hamburger" id="hamburger" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="logo">
+    <span class="logo-jp">元気</span>
+    <span class="logo-en">Genki Audio Library</span>
+  </div>
+  <div class="tabs" id="tabs"></div>
+</header>
+
+<div class="main">
+  <aside class="sidebar" id="sidebar"></aside>
+  <section class="content" id="content"></section>
+</div>
+
+<div class="mobile-book-bar" id="mobile-tabs"></div>
+
+<script src="data.js"></script>
+<script>
+  let curBook  = 'genki1_textbook';
+  let curCh    = null;
+  let curAudio = null;
+  let curId    = null;
+
+  const BOOKS = [
+    { key: 'genki1_textbook', label: 'Genki I Textbook'  },
+    { key: 'genki1_workbook', label: 'Genki I Workbook'  },
+    { key: 'genki2_textbook', label: 'Genki II Textbook' },
+    { key: 'genki2_workbook', label: 'Genki II Workbook' },
+  ];
+
+  // ── Classify a filename into { part, type, btnClass, rowClass, waveColor, labelClass } ──
+  function classify(name) {
+    const n = name.toUpperCase();
+
+    // Textbook K part
+    if (n.startsWith('K_K'))  return { part:'K', type:'k',  btnClass:'pbk', rowClass:'type-k',  waveColor:'white', labelClass:'k-dialogue',  label:'课文 Dialogue'  };
+    if (n.startsWith('V_K'))  return { part:'K', type:'v',  btnClass:'pbv', rowClass:'type-v',  waveColor:'white', labelClass:'k-vocab',     label:'単語 Vocabulary' };
+    if (n.startsWith('R_K'))  return { part:'K', type:'r',  btnClass:'pbr', rowClass:'type-r',  waveColor:'white', labelClass:'k-practice',  label:'練習 Practice'  };
+
+    // Textbook Y part
+    if (n.startsWith('K_Y'))  return { part:'Y', type:'y',  btnClass:'pby', rowClass:'type-y',  waveColor:'white', labelClass:'y-dialogue',  label:'课文 Dialogue'  };
+    if (n.startsWith('V_Y'))  return { part:'Y', type:'v',  btnClass:'pbv', rowClass:'type-v',  waveColor:'white', labelClass:'y-vocab',     label:'単語 Vocabulary' };
+    if (n.startsWith('R_Y'))  return { part:'Y', type:'r',  btnClass:'pbr', rowClass:'type-r',  waveColor:'white', labelClass:'y-practice',  label:'練習 Practice'  };
+
+    // Workbook
+    if (n.startsWith('WK'))   return { part:'WK', type:'wk', btnClass:'pbk', rowClass:'type-wk', waveColor:'white', labelClass:'wk', label:'WK Audio' };
+    if (n.startsWith('WY'))   return { part:'WY', type:'wy', btnClass:'pby', rowClass:'type-wy', waveColor:'white', labelClass:'wy', label:'WY Audio' };
+
+    return { part:'?', type:'k', btnClass:'pbk', rowClass:'type-k', waveColor:'white', labelClass:'k-dialogue', label:'Audio' };
+  }
+
+  // ── Check if URL is Google Drive preview ──
+  function isGDrive(url) {
+    return url && url.includes('drive.google.com');
+  }
+
+  // ── Tabs ──
+  function buildTabs(id) {
+    const el = document.getElementById(id);
+    BOOKS.forEach(b => {
+      const btn = document.createElement('button');
+      btn.className = 'tab-btn' + (b.key === curBook ? ' active' : '');
+      btn.textContent = b.label;
+      btn.onclick = () => selectBook(b.key);
+      el.appendChild(btn);
+    });
+  }
+  buildTabs('tabs');
+  buildTabs('mobile-tabs');
+
+  function selectBook(key) {
+    curBook = key; curCh = null;
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      const match = BOOKS.find(b => b.label === btn.textContent);
+      if (match) btn.classList.toggle('active', match.key === key);
+    });
+    renderSidebar(); renderContent();
+  }
+
+  // ── Sidebar ──
+  function renderSidebar() {
+    const el = document.getElementById('sidebar');
+    const chs = Object.keys(audioData[curBook] || {}).sort();
+    el.innerHTML = `<div class="sb-label">Chapters</div>`;
+    chs.forEach(ch => {
+      const btn = document.createElement('button');
+      btn.className = 'ch-btn' + (ch === curCh ? ' active' : '');
+      btn.innerHTML = `<div class="ch-pill">${parseInt(ch)}</div>Chapter ${parseInt(ch)}`;
+      btn.onclick = () => { pickChapter(ch); closeSidebar(); };
+      el.appendChild(btn);
+    });
+    if (!curCh && chs.length) pickChapter(chs[0]);
+  }
+
+  function pickChapter(ch) {
+    curCh = ch;
+    document.querySelectorAll('.ch-btn').forEach(b => {
+      b.classList.toggle('active', b.querySelector('.ch-pill')?.textContent == parseInt(ch));
+    });
+    renderContent();
+  }
+
+  // ── Content ──
+  function renderContent() {
+    const el = document.getElementById('content');
+    if (!curCh) { el.innerHTML = `<div class="empty"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19V6l12-3v13M9 19c0 1.1-1.34 2-3 2s-3-.9-3-2 1.34-2 3-2 3 .9 3 2zm12-3c0 1.1-1.34 2-3 2s-3-.9-3-2 1.34-2 3-2 3 .9 3 2z"/></svg>Select a chapter to begin</div>`; return; }
+
+    const files = (audioData[curBook][curCh] || []).slice().sort((a,b) => a.name.localeCompare(b.name));
+    if (!files.length) { el.innerHTML = `<div class="empty">No audio files yet ✨</div>`; return; }
+
+    const bk = BOOKS.find(b => b.key === curBook);
+    const isWorkbook = curBook.includes('workbook');
+
+    // Group by part then sub-type
+    // Structure: { K: { dialogue:[], vocab:[], practice:[] }, Y: {...}, WK: [], WY: [] }
+    const parts = {};
+    files.forEach(f => {
+      const c = classify(f.name);
+      if (!parts[c.part]) parts[c.part] = {};
+      const key = c.type; // 'k','v','r','y','wk','wy'
+      if (!parts[c.part][key]) parts[c.part][key] = { meta: c, files: [] };
+      parts[c.part][key].files.push(f);
+    });
+
+    // Part display order and metadata
+    const partOrder = isWorkbook ? ['WK','WY'] : ['K','Y'];
+    const partMeta = {
+      K:  { badge: 'k', title: '会話文法編 · K Part' },
+      Y:  { badge: 'y', title: '読み書き編 · Y Part' },
+      WK: { badge: 'k', title: '会話文法編 · K Part' },
+      WY: { badge: 'y', title: '読み書き編 · Y Part' },
+    };
+
+    // Sub-type order for textbook
+    const subOrder = isWorkbook
+      ? { WK: ['wk'], WY: ['wy'] }
+      : { K: ['k','v','r'], Y: ['y','v','r'] };
+
+    const subMeta = {
+      k:  { labelClass:'k-dialogue', label:'课文 Dialogue'   },
+      v:  { labelClass:'k-vocab',    label:'単語 Vocabulary' },
+      r:  { labelClass:'k-practice', label:'練習 Practice'   },
+      y:  { labelClass:'y-dialogue', label:'课文 Dialogue'   },
+      wk: { labelClass:'wk',         label:'K Part Audio'    },
+      wy: { labelClass:'wy',         label:'Y Part Audio'    },
+    };
+    // override vocab/practice under Y to orange-ish label
+    const subMetaY = {
+      y:  { labelClass:'y-dialogue', label:'课文 Dialogue'   },
+      v:  { labelClass:'y-vocab',    label:'単語 Vocabulary' },
+      r:  { labelClass:'y-practice', label:'練習 Practice'   },
+    };
+
+    let html = `<div class="ch-header"><h2>Chapter ${parseInt(curCh)}</h2><div class="meta">${bk.label} · ${files.length} tracks</div></div>`;
+
+    partOrder.forEach(partKey => {
+      if (!parts[partKey]) return;
+      const pm = partMeta[partKey];
+      const order = subOrder[partKey] || [];
+
+      html += `
+        <div class="part-block">
+          <div class="part-header">
+            <span class="part-badge ${pm.badge}">${pm.badge === 'k' ? 'K' : 'Y'}</span>
+            <span class="part-title">${pm.title}</span>
+            <div class="part-line"></div>
+          </div>`;
+
+      order.forEach(subKey => {
+        const group = parts[partKey][subKey];
+        if (!group || !group.files.length) return;
+
+        const sm = (partKey === 'Y' && subMetaY[subKey]) ? subMetaY[subKey] : subMeta[subKey];
+        const btnCls = group.meta.btnClass;
+        const rowCls = group.meta.rowClass;
+        const waveColor = group.meta.waveColor;
+
+        html += `
+          <div class="sub-section">
+            <div class="sub-label ${sm.labelClass}">
+              <span class="dot"></span>${sm.label}
+            </div>
+            <div class="audio-list">`;
+
+        group.files.forEach((file, i) => {
+          const id = `${curBook}-${curCh}-${subKey}-${i}`;
+          const gdrive = isGDrive(file.url);
+
+          if (gdrive) {
+            html += `
+              <div class="audio-row ${rowCls}" id="row-${id}">
+                <div class="row-info" style="flex:1">
+                  <div class="row-name" style="margin-bottom:6px">${file.name}</div>
+                  <iframe class="gd-player" src="${file.url}" allow="autoplay"></iframe>
+                </div>
+              </div>`;
+          } else {
+            html += `
+              <div class="audio-row ${rowCls}" id="row-${id}">
+                <button class="play-btn ${btnCls}" id="btn-${id}" onclick="togglePlay('${id}','${file.url}','${rowCls}','${btnCls}','${waveColor}')">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="tri"><polygon points="5,3 19,12 5,21"/></svg>
+                </button>
+                <div class="row-info">
+                  <div class="row-name">${file.name}</div>
+                  <div class="row-prog">
+                    <div class="prog-track" id="trk-${id}" onclick="seek(event,'${id}')">
+                      <div class="prog-fill" id="fill-${id}"></div>
+                    </div>
+                    <div class="row-time" id="time-${id}">0:00 / 0:00</div>
+                  </div>
+                </div>
+              </div>`;
+          }
+        });
+
+        html += `</div></div>`;
+      });
+
+      html += `</div>`;
+    });
+
+    el.innerHTML = html;
+  }
+
+  // ── Playback (local files only) ──
+  function togglePlay(id, url, rowCls, btnCls, waveColor) {
+    if (curId === id && curAudio) {
+      curAudio.paused ? (curAudio.play(), setUI(id, true, btnCls, waveColor)) : (curAudio.pause(), setUI(id, false, btnCls, waveColor));
+      return;
+    }
+    if (curAudio) { curAudio.pause(); setUI(curId, false, _lastBtnCls, _lastWave); resetProg(curId); }
+
+    const a = new Audio(url);
+    curAudio = a; curId = id;
+    _lastBtnCls = btnCls; _lastWave = waveColor;
+
+    a.addEventListener('timeupdate', () => {
+      const fill = document.getElementById('fill-' + id);
+      const time = document.getElementById('time-' + id);
+      if (!fill || !time) return;
+      fill.style.width = (a.duration ? a.currentTime / a.duration * 100 : 0) + '%';
+      time.textContent = `${fmt(a.currentTime)} / ${fmt(a.duration || 0)}`;
+    });
+    a.addEventListener('ended', () => { setUI(id, false, btnCls, waveColor); resetProg(id); curAudio = null; curId = null; });
+    a.play();
+    setUI(id, true, btnCls, waveColor);
+  }
+
+  let _lastBtnCls = '', _lastWave = 'white';
+
+  function setUI(id, on, btnCls, waveColor) {
+    document.getElementById('row-' + id)?.classList.toggle('playing', on);
+    const btn = document.getElementById('btn-' + id);
+    if (!btn) return;
+    btn.innerHTML = on
+      ? `<div class="wave"><div class="wb" style="background:${waveColor}"></div><div class="wb" style="background:${waveColor}"></div><div class="wb" style="background:${waveColor}"></div><div class="wb" style="background:${waveColor}"></div></div>`
+      : `<svg viewBox="0 0 24 24" fill="currentColor" class="tri"><polygon points="5,3 19,12 5,21"/></svg>`;
+  }
+
+  function resetProg(id) {
+    const f = document.getElementById('fill-' + id);
+    const t = document.getElementById('time-' + id);
+    if (f) f.style.width = '0%';
+    if (t) t.textContent = '0:00 / 0:00';
+  }
+
+  function seek(e, id) {
+    if (!curAudio || curId !== id) return;
+    const trk = document.getElementById('trk-' + id);
+    curAudio.currentTime = (e.clientX - trk.getBoundingClientRect().left) / trk.offsetWidth * curAudio.duration;
+  }
+
+  function fmt(s) {
+    if (!s || isNaN(s)) return '0:00';
+    return `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+  }
+
+  // ── Mobile sidebar ──
+  function toggleSidebar() {
+    const s = document.getElementById('sidebar');
+    const o = document.getElementById('overlay');
+    const h = document.getElementById('hamburger');
+    const open = s.classList.contains('open');
+    s.classList.toggle('open', !open);
+    o.classList.toggle('open', !open);
+    h.classList.toggle('open', !open);
+  }
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+
+  renderSidebar();
+  renderContent();
+</script>
+</body>
+</html>
