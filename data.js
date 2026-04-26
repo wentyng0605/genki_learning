@@ -69,17 +69,23 @@ const audioData = {
       { name: "R_K01_23.mp3", url: "https://drive.google.com/file/d/1hIt55IxaRS2XTJJ4m_FNJG4YZ0D3RIeT/view?usp=sharing" },
       { name: "R_K01_24.mp3", url: "https://drive.google.com/file/d/1hIt55IxaRS2XTJJ4m_FNJG4YZ0D3RIeT/view?usp=sharing" },
 
-      { name: "Y01.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
+      { name: "Y01_1.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
+      { name: "Y01_2.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
+      { name: "Y01_3.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
+      { name: "Y01_4.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
+      { name: "Y01_5.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
+      { name: "Y01_6.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
       
     ],
+
     "02": [
       { name: "K_K02_01.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "K_K02_02.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "K_K02_03.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "K_K02_04.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
 
-      { name: "V_K02_05.mp3",    url: "audio/genki1/ch02/V02.mp3" },
-      { name: "V_K02_06.mp3",    url: "audio/genki1/ch02/V02.mp3" },
+      { name: "V_K02_05.mp3",    url: "audio/genki1/ch02/K02_05.mp3" },
+      { name: "V_K02_06.mp3",    url: "audio/genki1/ch02/K02_06.mp3" },
 
       { name: "R_K02_07.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "R_K02_08.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
@@ -91,7 +97,9 @@ const audioData = {
       { name: "R_K02_14.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "R_K02_15.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
 
-      { name: "Y02.mp3",    url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "Y02_1.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
+      { name: "Y02_2.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
+      { name: "Y02_3.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
     ],
 
     "03": [
@@ -100,8 +108,8 @@ const audioData = {
       { name: "K_K03_03.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "K_K03_04.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
 
-      { name: "V_K03_05.mp3",    url: "audio/genki1/ch03/V03.mp3" },
-      { name: "V_K03_06.mp3",    url: "audio/genki1/ch03/V03.mp3" },
+      { name: "V_K03_05.mp3",    url: "audio/genki1/ch03/K03_05.mp3" },
+      { name: "V_K03_06.mp3",    url: "audio/genki1/ch03/K03_06.mp3" },
 
       { name: "R_K03_07.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "R_K03_08.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
@@ -124,8 +132,8 @@ const audioData = {
       { name: "K_K04_05.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "K_K04_06.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
 
-      { name: "V_K04_07.mp3",    url: "audio/genki1/ch03/V03.mp3" },
-      { name: "V_K04_08.mp3",    url: "audio/genki1/ch03/V03.mp3" },
+      { name: "V_K04_07.mp3",    url: "audio/genki1/ch04/K04_07.mp3" },
+      { name: "V_K04_08.mp3",    url: "audio/genki1/ch04/K04_08p3" },
 
       { name: "R_K04_09.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "R_K04_10.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
@@ -140,7 +148,6 @@ const audioData = {
       { name: "R_K04_19.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
 
       { name: "Y04.mp3",    url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "V04.mp3",    url: "audio/genki1/ch04/V04.mp3" },
     ],
 
     "05": [
@@ -151,8 +158,8 @@ const audioData = {
       { name: "K_K05_05.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "K_K05_06.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
 
-      { name: "V_K05_07.mp3",    url: "audio/genki1/ch03/V03.mp3" },
-      { name: "V_K05_08.mp3",    url: "audio/genki1/ch03/V03.mp3" },
+      { name: "V_K05_07.mp3",    url: "audio/genki1/ch05/K05_07.mp3" },
+      { name: "V_K05_08.mp3",    url: "audio/genki1/ch05/K05_08.mp3" },
 
       { name: "R_K04_09.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "R_K04_10.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
@@ -163,8 +170,8 @@ const audioData = {
       { name: "R_K04_15.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "R_K04_16.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
 
-      { name: "Y05.mp3",    url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "V05.mp3",    url: "audio/genki1/ch05/V05.mp3" },
+      { name: "Y05_1.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
+      { name: "Y05_2.mp3",    url: "https://drive.google.com/file/d/19FjmdkC3hlXn2SMkR4FfOgxgrFGzxrZB/preview" },
     ],
 
     "06": [
@@ -175,8 +182,8 @@ const audioData = {
       { name: "K_K06_05.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "K_K06_06.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
 
-      { name: "V_K06_07.mp3",    url: "audio/genki1/ch03/V03.mp3" },
-      { name: "V_K06_08.mp3",    url: "audio/genki1/ch03/V03.mp3" },
+      { name: "V_K06_07.mp3",    url: "audio/genki1/ch06/K06_07.mp3" },
+      { name: "V_K06_08.mp3",    url: "audio/genki1/ch06/K06_08.mp3" },
 
       { name: "R_K06_09.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "R_K06_10.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
@@ -187,98 +194,142 @@ const audioData = {
       { name: "R_K06_15.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
 
       { name: "Y06.mp3",    url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "V06.mp3",    url: "audio/genki1/ch06/V06.mp3" },
     ],
 
     "07": [
-     { name: "K_K07_01.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K07_01.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "K_K07_02.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
       { name: "K_K07_03.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "K_K07_04.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" }，
+      { name: "K_K07_04.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
 
-      { name: "V_K07_05.mp3",    url: "audio/genki1/ch03/V03.mp3" },
-      { name: "V_K07_06.mp3",    url: "audio/genki1/ch03/V03.mp3" },
+      { name: "V_K07_05.mp3",    url: "audio/genki1/ch07/K07_05.mp3" },
+      { name: "V_K07_06.mp3",    url: "audio/genki1/ch07/K07_06.mp3" },
 
-      { name: "R_K06_07.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "R_K06_08.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "R_K06_09.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "R_K06_10.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "R_K06_11.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "R_K06_12.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "R_K06_13.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "R_K06_14.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K07_07.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K07_08.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K07_09.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K07_10.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K07_11.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K07_12.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K07_13.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K07_14.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
 
-      
       { name: "Y07.mp3",    url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "V07.mp3",    url: "audio/genki1/ch07/V07.mp3" },
     ],
+
     "08": [
-      { name: "K08_01.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "K08_02.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K08_01.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K08_02.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K08_03.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K08_04.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+
+      { name: "V_K08_05.mp3",    url: "audio/genki1/ch08/K08_05.mp3" },
+      { name: "V_K08_06.mp3",    url: "audio/genki1/ch08/K08_06.mp3" },
+
+      { name: "R_K08_07.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K08_08.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K08_09.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K08_10.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K08_11.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K08_12.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K08_13.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K08_14.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K08_15.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K08_16.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K08_17.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K08_18.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+
       { name: "Y08.mp3",    url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "V08.mp3",    url: "audio/genki1/ch08/V08.mp3" },
     ],
+
     "09": [
-      { name: "K09_01.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "K09_02.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "Y09.mp3",    url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
-      { name: "V09.mp3",    url: "audio/genki1/ch09/V09.mp3" },
+      { name: "K_K09_01.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K09_02.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K09_03.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K09_04.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K09_05.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K09_06.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+
+      { name: "V_K09_07.mp3",    url: "audio/genki1/ch09/K09_07.mp3" },
+      { name: "V_K09_08.mp3",    url: "audio/genki1/ch09/K09_08.mp3" },
+
+      { name: "R_K09_09.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K09_10.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K09_11.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K09_12.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K09_13.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K09_14.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K09_15.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K09_16.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K09_17.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      
+      { name: "Y09_1.mp3",    url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "Y09_2.mp3",    url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
     ],
+
     "10": [
-      { name: "K10_01.mp3", url: "https://drive.google.com/file/d/1Q7CmYLUHndinzhsMRO6VHvBhu3MV8jF0/preview" },
-      { name: "K10_02.mp3", url: "https://drive.google.com/file/d/1oh_tb0qK9tpX2GErcDPgiokSZnHzoqpO/preview" },
-      { name: "K10_03.mp3", url: "https://drive.google.com/file/d/1yuSszvoDIuv2m3G2vOKFOnyHnE74tUwy/preview" },
-      { name: "K10_04.mp3", url: "https://drive.google.com/file/d/1apDnUBA4VUpQZJhxm-1d49A00GlwpZ8d/preview" },
-      { name: "K10_05.mp3", url: "https://drive.google.com/file/d/1uMXNQdfU21sZjouDIOHvqp0x3bqHQNmA/preview" },
-      { name: "K10_06.mp3", url: "https://drive.google.com/file/d/1rTWy6oxLAGhEjpr1Lbu9-haHAybs2F5x/preview" },
-      { name: "K10_07.mp3", url: "https://drive.google.com/file/d/1BbxqVbVmEu9sBKI2guRW6ShMtsa-ccoj/preview" },
-      { name: "K10_08.mp3", url: "https://drive.google.com/file/d/1wgPl4LGXeKw6mpBrQ1-ATnkdSJ6CJHFx/preview" },
-      { name: "K10_09.mp3", url: "https://drive.google.com/file/d/1V4HAPO5n_thrPhafURln4ed8U8fMtF4U/preview" },
-      { name: "K10_10.mp3", url: "https://drive.google.com/file/d/1BRxVMRdxODpEK7kndyW5id_EKyU0lwRo/preview" },
-      { name: "K10_11.mp3", url: "https://drive.google.com/file/d/1C1fbzAUjC7LT1dnTBX12t8cXRivv-x-x/preview" },
-      { name: "K10_12.mp3", url: "https://drive.google.com/file/d/1bEhgr_RcQlOKiaebfT1vvcSqBDx718bn/preview" },
-      { name: "K10_13.mp3", url: "https://drive.google.com/file/d/1_NXSPnUxnjFV6qGI6XUC3fUUMwAANy81/preview" },
-      { name: "K10_14.mp3", url: "https://drive.google.com/file/d/1nG0U5WHhG1x-ildk-m_MP9px2IHW70aI/preview" },
-      { name: "K10_15.mp3", url: "https://drive.google.com/file/d/1ucmmJ6mb_NIm5fbkYP2Fgzwg5PTbm5BR/preview" },
+      { name: "K_K10_01.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K10_02.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K10_03.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K10_04.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+
+      { name: "V_K10_05.mp3",    url: "audio/genki1/ch10/K10_05.mp3" },
+      { name: "V_K10_06.mp3",    url: "audio/genki1/ch10/K10_06.mp3" },
+
+      { name: "R_K10_07.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K10_08.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K10_09.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K10_10.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K10_11.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K10_12.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K10_13.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K10_14.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K10_15.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+
       { name: "Y10.mp3",    url: "https://drive.google.com/file/d/1Vz69nog5Yf62jFk6zji4d27gbLOOSXQP/preview" },
-      { name: "V10.mp3",    url: "audio/genki1/ch10/V10.mp3" },
     ],
+
     "11": [
-      { name: "K11_01.mp3", url: "https://drive.google.com/file/d/1Rj6rEF-ojfY705_E1OAnOrtV7hniw2Az/preview" },
-      { name: "K11_02.mp3", url: "https://drive.google.com/file/d/1zx8iocwPP_8NY7eZU_4nFGLDKMBR1izj/preview" },
-      { name: "K11_03.mp3", url: "https://drive.google.com/file/d/1JntNvFeUReXic3dsTSxBHZy0_mZSpmKX/preview" },
-      { name: "K11_04.mp3", url: "https://drive.google.com/file/d/1fcl9adKoRsBSVI9_lFqXO6s-0dhkGvwK/preview" },
-      { name: "K11_05.mp3", url: "https://drive.google.com/file/d/1IoPXZh5A4Gfex0R0igFcSobN2zMUed7R/preview" },
-      { name: "K11_06.mp3", url: "https://drive.google.com/file/d/1Kjb00mvAwqRm_-6GxTqJDQMUB1DBb9i_/preview" },
-      { name: "K11_07.mp3", url: "https://drive.google.com/file/d/1xaRzW5aBm6vska71D7GYE54z-iEkxf5q/preview" },
-      { name: "K11_08.mp3", url: "https://drive.google.com/file/d/1T1_kwlHh_4-KmpzN1jJvRtdmJWmu_Yzv/preview" },
-      { name: "K11_09.mp3", url: "https://drive.google.com/file/d/1J9F3HTIqYEdke7tQQSvT7HLISGdLlNIs/preview" },
-      { name: "K11_10.mp3", url: "https://drive.google.com/file/d/1915RWju60ldBX92c6KaYtEZKKT1eEwhr/preview" },
-      { name: "K11_11.mp3", url: "https://drive.google.com/file/d/16UfpVcXpQhSVUICB1tqkO_BPais5AYCw/preview" },
-      { name: "K11_12.mp3", url: "https://drive.google.com/file/d/1Vpqt7BQ-7NJQl0zO29Ei4vyWStTwLidS/preview" },
-      { name: "K11_13.mp3", url: "https://drive.google.com/file/d/1SnlZL3baXtBkBhOpLUGElSsSgFCifCSP/preview" },
-      { name: "K11_14.mp3", url: "https://drive.google.com/file/d/1xHrB_uM8v6lLTKmcPYhMhbIOZhiPITFX/preview" },
+      { name: "K_K11_01.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K11_02.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K11_03.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K11_04.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K11_05.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K11_06.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+
+      { name: "V_K11_07.mp3",    url: "audio/genki1/ch11/K11_07.mp3" },
+      { name: "V_K11_08.mp3",    url: "audio/genki1/ch11/K11_08.mp3" },
+
+      { name: "R_K11_09.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K11_10.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K11_11.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K11_12.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K11_13.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K11_14.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+
       { name: "Y11_1.mp3",  url: "https://drive.google.com/file/d/1047CLg3V2WVBrpy6_pcNi5TNYhHrYyAZ/preview" },
       { name: "Y11_2.mp3",  url: "https://drive.google.com/file/d/1l1tZJxjz7wHz156oUtyTzSTyNnCCXNMb/preview" },
-      { name: "V11.mp3",    url: "audio/genki1/ch11/V11.mp3" },
     ],
+
     "12": [
-      { name: "K12_01.mp3", url: "https://drive.google.com/file/d/1QmYJ-Ih8qKgSZ-Nn_YC9Pv9bi1rpTyO0/preview" },
-      { name: "K12_02.mp3", url: "https://drive.google.com/file/d/1lx4laXQC6XdUBRxy49BoM4u5mhn7BrqQ/preview" },
-      { name: "K12_03.mp3", url: "https://drive.google.com/file/d/1YNXRQmUxG7r2FN-0lgBrVGhOmWC8RZy7/preview" },
-      { name: "K12_04.mp3", url: "https://drive.google.com/file/d/1kKrBaHncsAeNz_sD6hYbQDwBAhIvWdHo/preview" },
-      { name: "K12_05.mp3", url: "https://drive.google.com/file/d/1TNnJVkFrSeznI1aMP92VP6z-CouDVtwb/preview" },
-      { name: "K12_06.mp3", url: "https://drive.google.com/file/d/1eg1q7DwmDHuqJoa6vzT6PtR1QeRi15zF/preview" },
-      { name: "K12_07.mp3", url: "https://drive.google.com/file/d/1oNrPtLbQFwVKGMRKm3wlK8kWcJgvY7yO/preview" },
-      { name: "K12_08.mp3", url: "https://drive.google.com/file/d/1wgPl4LGXeKw6mpBrQ1-ATnkdSJ6CJHFx/preview" },
-      { name: "K12_09.mp3", url: "https://drive.google.com/file/d/19YVhkIrQkatsEgNrOTdCc54QIF2ijla8/preview" },
-      { name: "K12_10.mp3", url: "https://drive.google.com/file/d/1ge-afbjxsMHjwC_L4Oo0p8nq0c2FbHsP/preview" },
-      { name: "K12_11.mp3", url: "https://drive.google.com/file/d/1FD2UUwhv_UVWGTFEKNN5cf60LNZl4qGG/preview" },
-      { name: "K12_12.mp3", url: "https://drive.google.com/file/d/1ruTOLUep2LeUZZe9-qX7TrrDbPHT1MLl/preview" },
-      { name: "K12_13.mp3", url: "https://drive.google.com/file/d/1COWhM2ehomtXn_geB_NrU26Tb5oddIYn/preview" },
-      { name: "K12_14.mp3", url: "https://drive.google.com/file/d/1pqie16hvkK3aWr5R6CC7yn7HUV0EOZ2b/preview" },
+      { name: "K_K12_01.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K12_02.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K12_03.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "K_K12_04.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+
+      { name: "V_K12_05.mp3",    url: "audio/genki1/ch12/K12_05.mp3" },
+      { name: "V_K12_06.mp3",    url: "audio/genki1/ch12/K12_06.mp3" },
+
+      { name: "R_K12_07.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K12_08.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K12_09.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K12_10.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K12_11.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K12_12.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K12_13.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+      { name: "R_K12_14.mp3", url: "https://drive.google.com/file/d/REPLACE_ME/preview" },
+
       { name: "Y12.mp3",    url: "https://drive.google.com/file/d/1ti8tcyioaOL23kLzCMfa1rl1hXqWggiI/preview" },
-      { name: "V12.mp3",    url: "audio/genki1/ch12/V12.mp3" },
     ],
   },
 
